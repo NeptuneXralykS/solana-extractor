@@ -1,14 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App'; // Adjust this import if necessary
-import reportWebVitals from './reportWebVitals'; // If you use this
+import './App.css'; // Ensure you have an App.css for your App-specific styles
+import SolanaTransactionComponent from './SolanaTransactionComponent'; // Adjust the import path as necessary
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Solana Transaction App</h1>
+        <p>Interact with the Solana blockchain easily.</p>
+      </header>
+      <main>
+        <SolanaTransactionComponent />
+      </main>
+      <footer>
+        <p>© 2023 Your Name or Company. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+}
 
-// Optionally, call reportWebVitals here or other code
+export default App;
