@@ -6,7 +6,8 @@ function SolanaTransactionComponent() {
     const [errorMessage, setErrorMessage] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     // Define the connection object at the component level to avoid re-creating it
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
+    const connection = new Connection("https://solana-mainnet.g.alchemy.com/v2/1Gmj17yRFWrJLF08tDFbv9KVTkBay-XB", 'confirmed');
+
 
     useEffect(() => {
         const connectWallet = async () => {
