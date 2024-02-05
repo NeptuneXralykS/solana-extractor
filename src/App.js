@@ -12,12 +12,4 @@ function App() {
   );
 }
 
-function App() {
-  return (
-    <div className="App">
-      <SolanaTransactionComponent />
-    </div>
-  );
-}
-
 export default App;
