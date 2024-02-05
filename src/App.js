@@ -1,15 +1,14 @@
 import React from 'react';
-import './App.css';
-import SolanaTransactionComponent from './SolanaTransactionComponent'; // Ensure this path matches your file structure
-import backgroundImage from './background.jpg'; // Adjust the path as needed
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App'; // Adjust this import if necessary
+import reportWebVitals from './reportWebVitals'; // If you use this
 
-function App() {
-  return (
-    <div className="App" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      {/* Your app content */}
-      <div className="error">Error message area</div>
-    </div>
-  );
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
 
-export default App;
+// Optionally, call reportWebVitals here or other code
