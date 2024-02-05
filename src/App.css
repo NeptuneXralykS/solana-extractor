@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   height: 100vh;
-  background-image: url('C:\solana-extractor\src\your-background-image.jpg'); /* Adjust the path as necessary */
+  background-image: none;
   background-size: cover;
   background-position: center;
   display: flex;
