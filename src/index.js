@@ -1,14 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App'; // Adjust this import if necessary
-import reportWebVitals from './reportWebVitals'; // If you use this
+import { createRoot } from 'react-dom/client'; // Import for React 18's new root API
+import './index.css'; // Global styles for your app
+import App from './App'; // Import the App component
+import reportWebVitals from './reportWebVitals'; // Optional: For measuring performance
 
-ReactDOM.render(
+// Polyfills or other initializations can go here
+// For example, if you need to polyfill 'Buffer' for use with Solana's web3.js in the browser:
+import { Buffer } from 'buffer';
+window.Buffer = Buffer;
+
+const container = document.getElementById('root'); // Get the root DOM element
+const root = createRoot(container); // Create a root instance with the container
+
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
-// Optionally, call reportWebVitals here or other code
+// Optional: reportWebVitals can be used to log performance metrics
+// Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
