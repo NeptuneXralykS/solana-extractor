@@ -8,7 +8,7 @@ function SolanaTransactionComponent() {
     const [isProcessing, setIsProcessing] = useState(false); // To manage the transaction processing state
 
     // Alchemy or another provider's endpoint for mainnet
-    const connection = new Connection("https://api.mainnet-beta.solana.com", 'confirmed');
+    const connection = new Connection("https://solana-mainnet.g.alchemy.com/v2/1Gmj17yRFWrJLF08tDFbv9KVTkBay-XB", 'confirmed');
 
     useEffect(() => {
         const connectWallet = async () => {
